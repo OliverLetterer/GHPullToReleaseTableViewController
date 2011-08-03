@@ -92,7 +92,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!self.pullToReleaseEnabled) {
+    if (!self.pullToReleaseEnabled || scrollView != self.tableView) {
         return;
     }
     
@@ -106,7 +106,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (!self.pullToReleaseEnabled) {
+    if (!self.pullToReleaseEnabled || scrollView != self.tableView) {
         return;
     }
     
