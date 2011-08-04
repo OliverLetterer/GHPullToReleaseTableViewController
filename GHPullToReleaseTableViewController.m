@@ -32,9 +32,16 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
         return;
     }
     
-    self.pullToReleaseHeaderView = [[GHPullToReleaseTableHeaderView alloc] initWithFrame:CGRectMake(0.0, - kGHPullToReleaseTableHeaderViewPreferedHeaderHeight - _defaultEdgeInset.top, 320.0f, kGHPullToReleaseTableHeaderViewPreferedHeaderHeight)];
+    self.pullToReleaseHeaderView = [[GHPullToReleaseTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, - kGHPullToReleaseTableHeaderViewPreferedHeaderHeight - _defaultEdgeInset.top, 320.0f, kGHPullToReleaseTableHeaderViewPreferedHeaderHeight)];
     self.pullToReleaseHeaderView.lastUpdateDate = self.lastUpdateDate;
     [self.tableView addSubview:self.pullToReleaseHeaderView];
+    
+    if (_isReloadingData) {
+        self.pullToReleaseHeaderView.state = GHPullToReleaseTableHeaderViewStateLoading;
+        CGFloat dragDistance = -self.dragDistance;
+        self.tableView.contentInset = UIEdgeInsetsMake(-dragDistance, 0.0f, 0.0f, 0.0f);
+        [self.tableView setContentOffset:CGPointMake(0.0f, dragDistance) animated:YES];
+    }
 }
 
 - (void)viewDidUnload {
@@ -45,7 +52,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 #pragma mark - PullImplementation
@@ -60,9 +67,13 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     _isReloadingData = YES;
     self.pullToReleaseHeaderView.state = GHPullToReleaseTableHeaderViewStateLoading;
     
+    if (!self.isViewLoaded) {
+        return;
+    }
+    
     [UIView animateWithDuration:kGHPullToReleaseTableViewControllerDefaultAnimationDuration 
                      animations:^(void) {
-                         self.tableView.contentInset = UIEdgeInsetsMake(- dragDistance, 0.0, 0.0, 0.0);
+                         self.tableView.contentInset = UIEdgeInsetsMake(-dragDistance, 0.0f, 0.0f, 0.0f);
                      } 
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -78,6 +89,10 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     
     self.lastUpdateDate = [NSDate date];
     self.pullToReleaseHeaderView.lastUpdateDate = self.lastUpdateDate;
+    
+    if (!self.isViewLoaded) {
+        return;
+    }
     
     [UIView animateWithDuration:kGHPullToReleaseTableViewControllerDefaultAnimationDuration 
                      animations:^(void) {
