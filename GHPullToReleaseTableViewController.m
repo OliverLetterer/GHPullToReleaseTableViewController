@@ -33,7 +33,6 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     }
     
     self.pullToReleaseHeaderView = [[GHPullToReleaseTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, - kGHPullToReleaseTableHeaderViewPreferedHeaderHeight - _defaultEdgeInset.top, 320.0f, kGHPullToReleaseTableHeaderViewPreferedHeaderHeight)];
-    self.pullToReleaseHeaderView.lastUpdateDate = self.lastUpdateDate;
     [self.tableView addSubview:self.pullToReleaseHeaderView];
     
     if (_isReloadingData) {
@@ -41,7 +40,11 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
         CGFloat dragDistance = -self.dragDistance;
         self.tableView.contentInset = UIEdgeInsetsMake(-dragDistance, 0.0f, 0.0f, 0.0f);
         [self.tableView setContentOffset:CGPointMake(0.0f, dragDistance) animated:YES];
-    }
+    } else {
+        self.pullToReleaseHeaderView.lastUpdateDate = self.lastUpdateDate;
+        self.tableView.contentInset = self.defaultEdgeInset;
+        self.pullToReleaseHeaderView.state = GHPullToReleaseTableHeaderViewStateNormal;
+    } 
 }
 
 - (void)viewDidUnload {
@@ -101,6 +104,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
                      completion:^(BOOL finished) {
                          _isReloadingData = NO;
                          self.pullToReleaseHeaderView.state = GHPullToReleaseTableHeaderViewStateNormal;
+                         self.tableView.contentInset = self.defaultEdgeInset;
                      }];
 }
 
