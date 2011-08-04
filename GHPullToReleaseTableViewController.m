@@ -94,6 +94,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     self.pullToReleaseHeaderView.lastUpdateDate = self.lastUpdateDate;
     
     if (!self.isViewLoaded) {
+        _isReloadingData = NO;
         return;
     }
     
