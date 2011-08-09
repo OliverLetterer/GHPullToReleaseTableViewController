@@ -33,8 +33,6 @@
 
 @property (nonatomic, assign) BOOL pullToReleaseEnabled;
 
-@property (nonatomic, readonly) CGFloat dragDistance;
-
 @property (nonatomic, assign) UIEdgeInsets defaultEdgeInset;
 
 @property (nonatomic, retain) NSDate *lastUpdateDate;

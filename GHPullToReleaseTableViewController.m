@@ -11,6 +11,14 @@
 
 static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration = 0.3f;
 
+@interface GHPullToReleaseTableViewController ()
+
+@property (nonatomic, readonly) CGFloat dragDistance;
+
+@end
+
+
+
 @implementation GHPullToReleaseTableViewController
 
 @synthesize pullToReleaseHeaderView=_pullToReleaseHeaderView;
