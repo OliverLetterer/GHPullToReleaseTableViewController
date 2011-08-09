@@ -20,10 +20,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
 
 
 @implementation GHPullToReleaseTableViewController
-
-@synthesize pullToReleaseHeaderView=_pullToReleaseHeaderView;
-@synthesize pullToReleaseEnabled=_pullToReleaseEnabled;
-@synthesize defaultEdgeInset=_defaultEdgeInset;
+@synthesize pullToReleaseHeaderView=_pullToReleaseHeaderView, pullToReleaseEnabled=_pullToReleaseEnabled, defaultEdgeInset=_defaultEdgeInset;
 @synthesize lastUpdateDate=_lastUpdateDate;
 
 #pragma mark - setters and getters
@@ -40,8 +37,8 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
         return;
     }
     
-    self.pullToReleaseHeaderView = [[GHPullToReleaseTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, - kGHPullToReleaseTableHeaderViewPreferedHeaderHeight - _defaultEdgeInset.top, 320.0f, kGHPullToReleaseTableHeaderViewPreferedHeaderHeight)];
-    [self.tableView addSubview:self.pullToReleaseHeaderView];
+    _pullToReleaseHeaderView = [[GHPullToReleaseTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, - kGHPullToReleaseTableHeaderViewPreferedHeaderHeight - _defaultEdgeInset.top, 320.0f, kGHPullToReleaseTableHeaderViewPreferedHeaderHeight)];
+    [self.tableView addSubview:_pullToReleaseHeaderView];
     
     if (_isReloadingData) {
         self.pullToReleaseHeaderView.state = GHPullToReleaseTableHeaderViewStateLoading;

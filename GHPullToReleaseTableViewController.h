@@ -29,7 +29,7 @@
     NSDate *_lastUpdateDate;
 }
 
-@property (nonatomic, retain) GHPullToReleaseTableHeaderView *pullToReleaseHeaderView;
+@property (nonatomic, readonly, retain) GHPullToReleaseTableHeaderView *pullToReleaseHeaderView;
 
 @property (nonatomic, assign) BOOL pullToReleaseEnabled;
 
