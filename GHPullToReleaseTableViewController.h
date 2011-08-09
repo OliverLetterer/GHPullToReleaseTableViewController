@@ -37,8 +37,7 @@
 
 @property (nonatomic, retain) NSDate *lastUpdateDate;
 
-- (void)pullToReleaseTableViewReloadData;
-- (void)pullToReleaseTableViewDidReloadData;
-
+- (void)pullToReleaseTableViewReloadData;           // override
+- (void)pullToReleaseTableViewDidReloadData;        // call when done
 
 @end
