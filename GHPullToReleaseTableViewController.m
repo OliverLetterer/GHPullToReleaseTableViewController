@@ -2,7 +2,7 @@
 //  GHPullToReleaseTableViewController.m
 //  iGithub
 //
-//  Created by me on 14.05.11.
+//  Created by Oliver Letterer on 14.05.11.
 //  Copyright 2011 Home. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
 
 @interface GHPullToReleaseTableViewController ()
 
-@property (nonatomic, readonly) CGFloat dragDistance;
+@property (nonatomic, readonly) CGFloat minimumDragDistance;
 
 @end
 
@@ -25,8 +25,16 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
 
 #pragma mark - setters and getters
 
-- (CGFloat)dragDistance {
+- (CGFloat)minimumDragDistance {
     return kGHPullToReleaseTableHeaderViewPreferedHeaderHeight + _defaultEdgeInset.top;
+}
+
+- (void)setLastUpdateDate:(NSDate *)lastUpdateDate {
+    if (lastUpdateDate != _lastUpdateDate) {
+        _lastUpdateDate = lastUpdateDate;
+        
+        _pullToReleaseHeaderView.lastUpdateDate = self.lastUpdateDate;
+    }
 }
 
 #pragma mark - View lifecycle
@@ -42,7 +50,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     
     if (_isReloadingData) {
         self.pullToReleaseHeaderView.state = GHPullToReleaseTableHeaderViewStateLoading;
-        CGFloat dragDistance = -self.dragDistance;
+        CGFloat dragDistance = -self.minimumDragDistance;
         self.tableView.contentInset = UIEdgeInsetsMake(-dragDistance, 0.0f, 0.0f, 0.0f);
         [self.tableView setContentOffset:CGPointMake(0.0f, dragDistance) animated:YES];
     } else {
@@ -70,7 +78,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
         return;
     }
     
-    CGFloat dragDistance = -self.dragDistance;
+    CGFloat dragDistance = -self.minimumDragDistance;
     
     _isReloadingData = YES;
     self.pullToReleaseHeaderView.state = GHPullToReleaseTableHeaderViewStateLoading;
@@ -96,7 +104,6 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     }
     
     self.lastUpdateDate = [NSDate date];
-    self.pullToReleaseHeaderView.lastUpdateDate = self.lastUpdateDate;
     
     if (!self.isViewLoaded) {
         _isReloadingData = NO;
@@ -122,7 +129,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     }
     
     if (!_isReloadingData) {
-        CGFloat dragDistance = -self.dragDistance;
+        CGFloat dragDistance = -self.minimumDragDistance;
         
         if (scrollView.contentOffset.y <= dragDistance) {
             [self pullToReleaseTableViewReloadData];
@@ -136,7 +143,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     }
     
     if (!_isReloadingData) {
-        CGFloat dragDistance = -self.dragDistance;
+        CGFloat dragDistance = -self.minimumDragDistance;
         
         if (scrollView.contentOffset.y <= dragDistance) {
             self.pullToReleaseHeaderView.state = GHPullToReleaseTableHeaderViewStateDraggedDown;

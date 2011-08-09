@@ -2,20 +2,12 @@
 //  GHPullToReleaseTableViewController.h
 //  iGithub
 //
-//  Created by me on 14.05.11.
+//  Created by Oliver Letterer on 14.05.11.
 //  Copyright 2011 Home. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "GHPullToReleaseTableHeaderView.h"
-
-@class GHPullToReleaseTableViewController;
-
-@protocol GHPullToReleaseTableViewControllerDelegate <NSObject>
-
-@end
-
-
 
 @interface GHPullToReleaseTableViewController : UITableViewController {
 @private
