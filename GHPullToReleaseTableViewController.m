@@ -90,12 +90,7 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
     [UIView animateWithDuration:kGHPullToReleaseTableViewControllerDefaultAnimationDuration 
                      animations:^(void) {
                          self.tableView.contentInset = UIEdgeInsetsMake(-dragDistance, 0.0f, 0.0f, 0.0f);
-                     } 
-                     completion:^(BOOL finished) {
-                         if (finished) {
-                             [self.tableView setContentOffset:CGPointMake(0.0f, dragDistance) animated:YES];
-                         }
-                     }];
+                     } completion:nil];
 }
 
 - (void)pullToReleaseTableViewDidReloadData {
