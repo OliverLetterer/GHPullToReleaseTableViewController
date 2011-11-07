@@ -87,9 +87,14 @@ static CGFloat const kGHPullToReleaseTableViewControllerDefaultAnimationDuration
         return;
     }
     
+    BOOL shouldScrollToTop = CGRectGetMinY(self.tableView.bounds) == -_defaultEdgeInset.top;
+    
     [UIView animateWithDuration:kGHPullToReleaseTableViewControllerDefaultAnimationDuration 
                      animations:^(void) {
                          self.tableView.contentInset = UIEdgeInsetsMake(-dragDistance, 0.0f, 0.0f, 0.0f);
+                         if (shouldScrollToTop) {
+                             self.tableView.contentOffset = CGPointMake(0.0f, dragDistance);
+                         }
                      } completion:nil];
 }
 
